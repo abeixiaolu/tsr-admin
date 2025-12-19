@@ -1,0 +1,109 @@
+.ant-menu {
+  .ant-menu-submenu-title {
+    transition: none;
+    width: auto;
+  }
+  // 子菜单
+  .ant-menu-submenu {
+    .ant-menu-sub {
+      padding-left: 24px !important;
+      padding-right: 16px !important;
+    }
+    &:not(.ant-menu-submenu-selected) {
+      // 未选中菜单项图标颜色
+      .ant-menu-item-icon {
+        color: #718096;
+      }
+    }
+    &.ant-menu-submenu-selected {
+      .ant-menu-submenu-title {
+        position: relative;
+        &::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 0px;
+          width: 2px;
+          height: 16px;
+          background-color: var(--ant-color-primary);
+          border-radius: 0 4px 4px 0;
+          transform: translateY(-50%);
+        }
+      }
+    }
+
+    // 子菜单下的菜单项
+    .ant-menu-item {
+      padding-left: 24px !important;
+      &.ant-menu-item-selected {
+        color: var(--ant-text-color);
+      }
+      .ant-menu-title-content {
+        a,
+        span {
+          padding-left: 6px;
+        }
+      }
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 16px;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background-color: currentColor;
+        transform: translateY(-50%);
+      }
+    }
+  }
+
+  .ant-menu-item {
+    width: auto;
+    &:not(.ant-menu-item-selected) {
+      // 未选中菜单项图标颜色
+      .ant-menu-item-icon {
+        color: #718096;
+      }
+    }
+
+    span,
+    a {
+      transition: none;
+    }
+  }
+
+  &:not(.ant-menu-sub) {
+    > .ant-menu-item {
+      &.ant-menu-item-selected {
+        background-color: transparent;
+        &::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 0px;
+          width: 2px;
+          height: 16px;
+          background-color: var(--ant-color-primary);
+          border-radius: 0 4px 4px 0;
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+
+  // 折叠状态下
+  &.ant-menu-inline-collapsed {
+    .ant-menu-item {
+      margin: 4px;
+    }
+    .ant-menu-submenu-title {
+      margin: 4px;
+    }
+    .ant-menu-item-icon {
+      transition: none;
+      // 菜单图标大小修改后，不会居中问题解决
+      margin-top: 10px !important;
+    }
+  }
+}

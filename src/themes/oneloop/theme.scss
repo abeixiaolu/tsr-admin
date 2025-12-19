@@ -1,0 +1,114 @@
+:root {
+  --menu-icon-color: #718096;
+}
+
+.dark {
+  --menu-icon-color: #838383;
+}
+
+.pp-sidebar-menu {
+  .ant-menu-submenu-title {
+    transition: none;
+    width: auto;
+    margin: 0 16px;
+  }
+  .ant-menu-submenu {
+    &:not(.ant-menu-submenu-selected) {
+      // 未选中菜单项图标颜色
+      .ant-menu-item-icon {
+        color: var(--menu-icon-color);
+      }
+    }
+    &.ant-menu-submenu-selected {
+      .ant-menu-submenu-title {
+        font-weight: 500;
+      }
+    }
+    .ant-menu-item {
+      .ant-menu-title-content {
+        a,
+        span {
+          padding-left: 6px;
+        }
+      }
+    }
+  }
+  .ant-menu-item {
+    width: auto;
+    margin: 4px 16px;
+    &:not(.ant-menu-item-selected) {
+      // 未选中菜单项图标颜色
+      .ant-menu-item-icon {
+        color: var(--menu-icon-color);
+      }
+    }
+    &.ant-menu-item-selected {
+      font-weight: 500;
+    }
+
+    span,
+    a {
+      transition: none;
+    }
+  }
+
+  .ant-menu-title-content {
+    transition: none;
+  }
+
+  &.ant-menu-inline-collapsed {
+    // 折叠状态下
+    .ant-menu-item {
+      margin: 4px;
+    }
+    .ant-menu-submenu-title {
+      margin: 4px;
+    }
+    .ant-menu-item-icon {
+      transition: none;
+      // 菜单图标大小修改后，不会居中问题解决
+      margin-top: 10px !important;
+    }
+  }
+}
+
+.pp-header-btn {
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.ant-modal {
+  .ant-modal-container {
+    padding: 0;
+    .ant-modal-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--ant-color-border-secondary);
+      margin-bottom: 0;
+    }
+    .ant-modal-body {
+      padding: 24px;
+    }
+    .ant-modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--ant-color-border-secondary);
+      margin-top: 0;
+    }
+  }
+}
+
+// 重置size=large的表单label高度
+.ant-form-large .ant-form-item .ant-form-item-label > label {
+  height: auto;
+}
+
+.ant-select {
+  .ant-select-suffix {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &.ant-select-lg {
+    height: var(--select-height);
+  }
+}

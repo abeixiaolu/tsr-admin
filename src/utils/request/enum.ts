@@ -1,0 +1,2 @@
+export const SUCCESS_CODE = '00000000';
+export const AUTH_ERROR_CODES = ['60001122', '60001123', '60001118'];

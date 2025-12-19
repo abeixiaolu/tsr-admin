@@ -8,70 +8,95 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root';
-import { Route as AboutRouteImport } from './routes/about';
-import { Route as IndexRouteImport } from './routes/index';
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthRouteRouteImport } from './routes/_auth/route'
+import { Route as AuthIndexRouteImport } from './routes/_auth/index'
+import { Route as AuthAboutRouteImport } from './routes/_auth/about'
 
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
+const AuthRouteRoute = AuthRouteRouteImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRouteImport,
-} as any);
-const IndexRoute = IndexRouteImport.update({
+} as any)
+const AuthIndexRoute = AuthIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any);
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+const AuthAboutRoute = AuthAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute;
-  '/about': typeof AboutRoute;
+  '/about': typeof AuthAboutRoute
+  '/': typeof AuthIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute;
-  '/about': typeof AboutRoute;
+  '/about': typeof AuthAboutRoute
+  '/': typeof AuthIndexRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  '/': typeof IndexRoute;
-  '/about': typeof AboutRoute;
+  __root__: typeof rootRouteImport
+  '/_auth': typeof AuthRouteRouteWithChildren
+  '/_auth/about': typeof AuthAboutRoute
+  '/_auth/': typeof AuthIndexRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: '/' | '/about';
-  fileRoutesByTo: FileRoutesByTo;
-  to: '/' | '/about';
-  id: '__root__' | '/' | '/about';
-  fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/about' | '/'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/about' | '/'
+  id: '__root__' | '/_auth' | '/_auth/about' | '/_auth/'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  AboutRoute: typeof AboutRoute;
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/about': {
-      id: '/about';
-      path: '/about';
-      fullPath: '/about';
-      preLoaderRoute: typeof AboutRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    '/': {
-      id: '/';
-      path: '/';
-      fullPath: '/';
-      preLoaderRoute: typeof IndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth/': {
+      id: '/_auth/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AuthIndexRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/_auth/about': {
+      id: '/_auth/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AuthAboutRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
   }
 }
 
+interface AuthRouteRouteChildren {
+  AuthAboutRoute: typeof AuthAboutRoute
+  AuthIndexRoute: typeof AuthIndexRoute
+}
+
+const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthAboutRoute: AuthAboutRoute,
+  AuthIndexRoute: AuthIndexRoute,
+}
+
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
+  AuthRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-};
+  AuthRouteRoute: AuthRouteRouteWithChildren,
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()

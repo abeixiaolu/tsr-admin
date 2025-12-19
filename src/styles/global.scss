@@ -1,0 +1,58 @@
+@import 'antd/dist/reset.css';
+
+button {
+    border:none;
+    outline: none;
+    background-color: transparent;
+}
+
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: rgba(19, 28, 73, 0.11);
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(134, 144, 156, 0.65);
+  opacity: 0.65;
+  border-radius: 3px;
+}
+
+.dark {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 3px;
+  }
+}
+
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 9999;
+}
+.dark::view-transition-old(root) {
+  z-index: 9999;
+}
+.dark::view-transition-new(root) {
+  z-index: 1;
+}
+
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: var(--ant-color-text) !important; /* 文本颜色 */
+  transition: background-color 5000s ease-in-out 0s; /* 避免短暂闪烁 */
+  -webkit-box-shadow: 0 0 0px 1000px var(--ant-color-bg-container) inset !important; /* 覆盖背景（把#fff换成页面背景色）*/
+  box-shadow: 0 0 0px 1000px var(--ant-color-bg-container) inset !important;
+}

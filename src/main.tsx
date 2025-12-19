@@ -4,6 +4,7 @@ import 'virtual:uno.css';
 
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { routeTree } from './routeTree.gen';
+import '@/styles/global.scss';
 
 const router = createRouter({ routeTree });
 
