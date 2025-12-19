@@ -12,7 +12,11 @@ const envDir = fileURLToPath(new URL('env', import.meta.url));
 export default defineConfig({
   envDir,
   plugins: [
-    tanstackRouter({ target: 'react', autoCodeSplitting: true }),
+    tanstackRouter({
+      target: 'react',
+      autoCodeSplitting: true,
+      semicolons: false,
+    }),
     react({ babel: { plugins: [['babel-plugin-react-compiler']] } }),
     tsconfigPaths({}),
     compression({ algorithms: ['brotli', 'gzip'] }),

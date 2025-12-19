@@ -4120,6 +4120,11 @@ unocss-merge@^0.6.0:
   resolved "https://registry.yarnpkg.com/unocss-merge/-/unocss-merge-0.6.0.tgz#04ddc7d2d9787041e788441914964062dce57bad"
   integrity sha512-rPeY66NGwmasw7yVTVQ3bE5sX4go0UhNXJGE2+UKWDVfqBlTZLqBVThW/vQnB+4njKO7M8y3jVwzHI2UlAUtTQ==
 
+unocss-preset-completion@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/unocss-preset-completion/-/unocss-preset-completion-0.3.0.tgz#d17e2eea441e2fea56a30550fbae2e53dd2d5e21"
+  integrity sha512-Xmn9binBjTef3EN8rqaDqIKvPuUnK75+hAVEcPkoGyB0bsqMfKn3tEC7r8xPSmnhcipm8ETPZ9sAZQwoidUf5A==
+
 unocss@^66.5.10:
   version "66.5.10"
   resolved "https://registry.yarnpkg.com/unocss/-/unocss-66.5.10.tgz#1a36b54ed98fe1759f4c53c44b63dd8e88826044"
