@@ -1,18 +1,8 @@
-import {
-  defineConfig,
-  presetIcons,
-  presetWind3,
-  transformerDirectives,
-  transformerVariantGroup,
-} from 'unocss';
+import { defineConfig, presetIcons, presetWind3, transformerDirectives, transformerVariantGroup } from 'unocss';
 import { presetFunctionCompletion } from 'unocss-preset-completion';
 
 export default defineConfig({
-  presets: [
-    presetWind3(),
-    presetFunctionCompletion({ autocompleteFunctions: ['cn'] }),
-    presetIcons({ autoInstall: true }),
-  ],
+  presets: [presetWind3(), presetFunctionCompletion({}), presetIcons({ autoInstall: true })],
   transformers: [
     transformerVariantGroup(),
     transformerDirectives({
@@ -44,15 +34,10 @@ export default defineConfig({
     };
   },
   shortcuts: [
-    [
-      /^bd-normal(-[blrt])?$/,
-      ([, c]) =>
-        `border-[var(--ant-color-border)] ${c ? `border${c}-1 border${c}-solid` : `border-1 border-solid`} `,
-    ],
+    [/^bd-normal(-[blrt])?$/, ([, c]) => `border-[var(--ant-color-border)] ${c ? `border${c}-1 border${c}-solid` : `border-1 border-solid`} `],
     [
       /^bd-disable(-[blrt])?$/,
-      ([, c]) =>
-        `border-[var(--ant-color-border-secondary)] ${c ? `border${c}-1 border${c}-solid` : `border-1 border-solid`} `,
+      ([, c]) => `border-[var(--ant-color-border-secondary)] ${c ? `border${c}-1 border${c}-solid` : `border-1 border-solid`} `,
     ],
     ['text-main', 'text-[var(--ant-color-text)]'],
     ['text-normal', 'text-[var(--ant-color-text-secondary)]'],

@@ -15,7 +15,7 @@ export const routeData: RouteInfoItem[] = [
     children: [
       {
         key: '/order-detail/$id',
-        label: 'menu.order',
+        label: 'menu.order.detail',
         icon: ExampleIcon,
         hide: true,
       },
