@@ -1,18 +1,9 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import 'virtual:uno.css';
-
-import { createRouter, RouterProvider } from '@tanstack/react-router';
-import { routeTree } from './routeTree.gen';
 import '@/styles/global.scss';
-
-const router = createRouter({ routeTree });
-
-declare module '@tanstack/react-router' {
-  interface Register {
-    router: typeof router;
-  }
-}
+import { RouterProvider } from '@tanstack/react-router';
+import { router } from './router';
 
 // biome-ignore lint/style/noNonNullAssertion: always have
 createRoot(document.getElementById('root')!).render(

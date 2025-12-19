@@ -19,7 +19,6 @@ const cssModules = import.meta.glob('./**/*.scss', {
 });
 export function loadTheme(themeName: keyof typeof CUSTOM_THEME_MAP) {
   const themeContent: any = CUSTOM_THEME_MAP[themeName];
-  console.log('themeContent: ', themeContent);
   if (!themeContent) {
     return {};
   }

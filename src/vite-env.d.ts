@@ -8,6 +8,7 @@ interface ImportMetaEnv {
   readonly VITE_APP_ENV_TAG: string;
 }
 
+// biome-ignore lint/correctness/noUnusedVariables: no need
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }

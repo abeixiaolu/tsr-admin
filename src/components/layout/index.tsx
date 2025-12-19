@@ -5,7 +5,13 @@ import Header from './header';
 import Sidebar from './sidebar';
 
 export default function Layout() {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const width = document.documentElement.clientWidth;
+      return width >= 640 && width < 768;
+    }
+    return false;
+  });
   const manuallyCollapsed = useRef(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
