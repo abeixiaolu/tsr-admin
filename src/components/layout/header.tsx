@@ -19,9 +19,9 @@ export default function Header({ onCollapse }: HeaderProps) {
   const settings = useSettingStore((state) => state.settings);
   return (
     <div className="h-80px flex items-center justify-between bg-layout px-6 py-4 sticky top-0 z-100 inset-x-0">
-      <div className="flex items-center gap-2">
-        <button type="button" onClick={onCollapse}>
-          <Icon className="block text-20px sm:hidden hover:op-80 size-5" name={CollapseIcon} />
+      <div className="flex items-center gap-2 flex-1 min-w-0">
+        <button type="button" className="sm:hidden" onClick={onCollapse}>
+          <Icon className="block text-20px hover:op-80 size-5" name={CollapseIcon} />
         </button>
         <Breadcrumbs />
       </div>

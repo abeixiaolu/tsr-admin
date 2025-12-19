@@ -36,7 +36,7 @@ export default function Breadcrumbs() {
       <div className="flex items-center gap-2 ">
         {shouldShowBack && (
           <button className="bg-transparent fcc hover:op-80 cursor-pointer" type="button" onClick={() => history.back()}>
-            <Icon name={BackIcon} className="size-5" />
+            <Icon name={BackIcon} className="size-4" />
           </button>
         )}
         {title}

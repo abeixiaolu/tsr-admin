@@ -12,7 +12,7 @@ function RouteComponent() {
       <Icon name={'i-solar-archive-up-minimlistic-bold-duotone'} />
       {Array.from({ length: 100 }).map((_, idx) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: to be remove
-        <p key={idx}>Lorem {idx}</p>
+        <p key={idx}>Home {idx}</p>
       ))}
     </div>
   );

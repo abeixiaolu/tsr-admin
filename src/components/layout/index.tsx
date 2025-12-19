@@ -52,16 +52,10 @@ export default function Layout() {
   return (
     <ConfigureApp>
       <div className="min-h-[100svh] flex bg-[var(--ant-color-bg-layout)]">
-        <Sidebar
-          collapsed={collapsed}
-          handleCollapsed={handleCollapsed}
-          mobileOpen={mobileOpen}
-          setMobileOpen={setMobileOpen}
-          isMobile={isMobile}
-        />
+        <Sidebar collapsed={collapsed} handleCollapsed={handleCollapsed} mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} isMobile={isMobile} />
         <div className="min-w-0 flex flex-1 flex-col">
           <Header collapsed={collapsed} onCollapse={handleOpenMobileMenu} />
-          <div className="min-h-0 min-w-0 flex-1 overflow-auto p-3 md:p-6 pt-0!">
+          <div className="min-h-0 min-w-0 flex-1 p-3 md:p-6 pt-0!">
             <Outlet />
           </div>
         </div>

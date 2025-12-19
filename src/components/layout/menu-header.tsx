@@ -6,6 +6,7 @@ import darkText from '@/assets/logo/dark-text.svg';
 import icon from '@/assets/logo/icon.svg';
 import text from '@/assets/logo/text.svg';
 import Icon from '@/components/icon';
+import { useIsMobile } from '~/hooks/is-mobile';
 import { useSettingStore } from '~/stores/settings';
 import { useDark } from '~/themes/hook';
 import Shop from '~icons/internal/shop.svg?react';
@@ -40,13 +41,7 @@ export default function MenuHeader({ collapsed, isMobile }: MenuHeaderProps) {
   const logo = (
     <div className="my-6 w-full flex items-center px-6 gap-2">
       <img src={icon} alt="Logo Icon" className="size-30px" />
-      {collapsed ? null : (
-        <img
-          src={isDark ? darkText : text}
-          alt="Logo Text"
-          className="h-18px"
-        />
-      )}
+      {collapsed && !isMobile ? null : <img src={isDark ? darkText : text} alt="Logo Text" className="h-18px" />}
     </div>
   );
   if (showBusiness) {
@@ -54,17 +49,9 @@ export default function MenuHeader({ collapsed, isMobile }: MenuHeaderProps) {
       <div className="my-6 w-full flex flex-col items-center justify-center">
         {logo}
         {collapsed && !isMobile ? (
-          <CollapsedBusinessInfo
-            bizList={bizList}
-            currentBiz={currentBiz}
-            onSelect={setCurrentBiz}
-          />
+          <CollapsedBusinessInfo bizList={bizList} currentBiz={currentBiz} onSelect={setCurrentBiz} />
         ) : (
-          <BusinessInfo
-            bizList={bizList}
-            currentBiz={currentBiz}
-            onSelect={setCurrentBiz}
-          />
+          <BusinessInfo bizList={bizList} currentBiz={currentBiz} onSelect={setCurrentBiz} />
         )}
       </div>
     );
@@ -99,10 +86,7 @@ function BusinessInfo({ bizList, currentBiz, onSelect }: BusinessInfoProps) {
         menu={{
           items: menuOptions || [],
           selectedKeys: [currentBiz.merchantId],
-          onClick: (e) =>
-            onSelect(
-              bizList?.find((biz) => biz.merchantId === e.key) as BizItem,
-            ),
+          onClick: (e) => onSelect(bizList?.find((biz) => biz.merchantId === e.key) as BizItem),
         }}
         trigger={['click']}
       >
@@ -111,19 +95,14 @@ function BusinessInfo({ bizList, currentBiz, onSelect }: BusinessInfoProps) {
           <div className="min-w-0 flex-1">
             <Ellipsis text={currentBiz?.businessName} />
           </div>
-          {showChevron && (
-            <Icon name="svg-chevron-down" className="text-assist size-4" />
-          )}
+          {showChevron && <Icon name="svg-chevron-down" className="text-assist size-4" />}
         </div>
       </Dropdown>
       <div className="mt-2 text-assist lh-22px">Merchant ID</div>
       <div className="mt-2 flex items-center justify-between text-main lh-22px">
         <span>{currentBiz?.merchantId}</span>
         <button className="bg-transparent" type="button" onClick={handleCopy}>
-          <Icon
-            className="cursor-pointer hover:op-80 text-#718096 dark:text-#838383"
-            name="i-solar-copy-linear"
-          />
+          <Icon className="cursor-pointer hover:op-80 text-#718096 dark:text-#838383" name="i-solar-copy-linear" />
         </button>
       </div>
     </div>
@@ -132,12 +111,7 @@ function BusinessInfo({ bizList, currentBiz, onSelect }: BusinessInfoProps) {
 
 function CollapsedBusinessInfo(props: BusinessInfoProps) {
   return (
-    <Popover
-      classNames={{ container: 'p-0! shadow-none!' }}
-      placement="rightBottom"
-      arrow={false}
-      content={<BusinessInfo {...props} />}
-    >
+    <Popover classNames={{ container: 'p-0! shadow-none!' }} placement="rightBottom" arrow={false} content={<BusinessInfo {...props} />}>
       <HeaderBtn className="bd-normal!">
         <Icon name={Shop} className="size-5" />
       </HeaderBtn>
