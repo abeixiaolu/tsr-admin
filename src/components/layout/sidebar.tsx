@@ -1,10 +1,14 @@
-import type { MenuProps } from 'antd';
+import { useRouterState } from '@tanstack/react-router';
 import { Drawer, Menu } from 'antd';
-import { useTranslation } from 'react-i18next';
+import type { MenuItemType } from 'antd/es/menu/interface';
 import Icon from '@/components/icon';
 import { cn } from '@/utils';
+import { flattenRouteData, routeData } from '~/router/data';
+import type { RouteInfoItem } from '~/router/type';
+import { findRouteAncestors } from '~/router/utils';
 import CollapseIcon from '~icons/internal/collapse.svg?react';
 import MenuHeader from './menu-header';
+import { LocaleMenuItem } from './menu-label';
 
 interface SidebarProps {
   collapsed: boolean;
@@ -13,7 +17,23 @@ interface SidebarProps {
   setMobileOpen: (open: boolean) => void;
   isMobile: boolean;
 }
-type MenuItem = Required<MenuProps>['items'][number];
+
+const generateMenus = (routes: RouteInfoItem[]): MenuItemType[] => {
+  return routes
+    .filter((item) => !item.hide)
+    .map((item) => {
+      const children = item.children?.filter((item) => !item.hide);
+      return {
+        ...item,
+        type: undefined,
+        label: <LocaleMenuItem item={item} />,
+        icon: item.icon && <Icon name={item.icon} />,
+        children: children?.length ? generateMenus(children) : undefined,
+      };
+    });
+};
+
+const menus = generateMenus(routeData);
 
 export default function Sidebar({
   collapsed,
@@ -22,23 +42,23 @@ export default function Sidebar({
   isMobile,
   handleCollapsed,
 }: SidebarProps) {
-  const { t } = useTranslation();
-
-  // const handleMenuClick: MenuProps['onClick'] = (info) => {
-  //   navigate(info.key)
-  //   if (isMobile) {
-  //     setMobileOpen(false)
-  //   }
-  // }
-
-  // const menuItems = generateMenu(routeConfig)
-
+  const routerState = useRouterState();
+  const ancestors = findRouteAncestors(
+    flattenRouteData,
+    routerState.matches.at(-1)?.fullPath || '',
+  );
+  const selectedKeys = ancestors.map((item) => item.key);
+  const defaultOpenKeys: string[] = ancestors
+    .map((item) => item.parentKey!)
+    .filter(Boolean);
   const menu = (
     <Menu
+      selectedKeys={selectedKeys}
+      defaultOpenKeys={defaultOpenKeys}
       inlineIndent={12}
       mode="inline"
       inlineCollapsed={!isMobile && collapsed}
-      items={[]}
+      items={menus}
       classNames={{ root: 'pp-sidebar-menu' }}
     />
   );

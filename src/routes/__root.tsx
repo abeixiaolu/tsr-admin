@@ -3,7 +3,7 @@ import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
 const RootLayout = () => (
-  <ProgressProvider>
+  <ProgressProvider options={{ showSpinner: false }}>
     <Outlet />
     <TanStackRouterDevtools position="bottom-right" />
   </ProgressProvider>

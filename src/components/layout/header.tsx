@@ -18,7 +18,7 @@ interface HeaderProps {
 export default function Header({ onCollapse }: HeaderProps) {
   const settings = useSettingStore((state) => state.settings);
   return (
-    <div className="h-80px flex items-center justify-between bg-layout px-6 py-4 sticky top-0 inset-x-0">
+    <div className="h-80px flex items-center justify-between bg-layout px-6 py-4 sticky top-0 z-10 inset-x-0">
       <div className="flex items-center gap-2">
         <button type="button" onClick={onCollapse}>
           <Icon

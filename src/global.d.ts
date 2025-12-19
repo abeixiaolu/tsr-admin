@@ -10,6 +10,8 @@ declare global {
     respMsg: string;
     data: T;
   }
+
+  type LiteralUnion<T extends string> = T | (string & {});
 }
 
 export {};
