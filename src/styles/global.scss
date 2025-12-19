@@ -10,6 +10,9 @@ button {
     background-color: transparent;
 }
 
+.bprogress {
+  transition: none !important;
+}
 
 ::-webkit-scrollbar {
   width: 6px;
