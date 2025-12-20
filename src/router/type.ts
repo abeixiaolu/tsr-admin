@@ -11,5 +11,5 @@ export interface RouteInfoItem {
   /** 菜单中隐藏 */
   hide?: boolean;
   parentKey?: FileRoutePath;
-  type?: 'menu';
+  itemType?: 'menu';
 }

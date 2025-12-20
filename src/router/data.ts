@@ -30,13 +30,13 @@ export const routeData: RouteInfoItem[] = [
     key: 'random-1',
     label: 'menu.payIn&PayOut',
     icon: ExampleIcon,
-    type: 'menu',
+    itemType: 'menu',
     children: [
       {
         key: 'random-2',
         label: 'menu.payIn&PayOut',
         icon: ExampleIcon,
-        type: 'menu',
+        itemType: 'menu',
         children: [
           {
             key: '/settings',
