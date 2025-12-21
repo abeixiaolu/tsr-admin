@@ -9,7 +9,7 @@ export function setMessageApi(api: MessageInstance) {
   _messageApi = api;
 }
 
-export function messageApi() {
+export function message() {
   return _messageApi;
 }
 
@@ -17,7 +17,7 @@ export function setNotificationApi(api: NotificationInstance) {
   _notificationApi = api;
 }
 
-export function notificationApi() {
+export function notification() {
   return _notificationApi;
 }
 
@@ -25,6 +25,6 @@ export function setModalApi(api: HookAPI) {
   _modalApi = api;
 }
 
-export function modalApi() {
+export function modal() {
   return _modalApi;
 }

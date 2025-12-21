@@ -1,0 +1,90 @@
+.loginForm {
+  :global {
+    /* 通用覆盖：Chrome / Edge / Safari */
+    input:-webkit-autofill {
+      -webkit-text-fill-color: #40e252 !important; /* 文本颜色 */
+      caret-color: #40e252 !important; /* 光标颜色 */
+      transition: background-color 5000s ease-in-out 0s; /* 避免短暂闪烁 */
+      -webkit-box-shadow: 0 0 0px 1000px #020101 inset !important; /* 覆盖背景（把#fff换成页面背景色）*/
+      box-shadow: 0 0 0px 1000px #020101 inset !important;
+    }
+
+    .ant-input-outlined {
+      padding: 11px;
+      color: #40e252;
+      background-color: #020101;
+      &:hover,
+      &:focus,
+      &:focus-within {
+        background-color: #020101;
+      }
+    }
+  }
+}
+
+.leftPanel {
+  transform-origin: top left;
+  transition: transform 0.3s ease-out;
+
+  /* Scale down based on viewport height */
+  @media (max-height: 960px) {
+    padding-top: 60px;
+    padding-bottom: 60px;
+
+    :global {
+      .hero-img {
+        transform-origin: top left;
+        transform: scale(0.9);
+      }
+
+      .left-content {
+        gap: 40px;
+      }
+    }
+  }
+  @media (max-height: 750px) {
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+    :global {
+      .hero-img {
+        transform: scale(0.8);
+      }
+    }
+  }
+}
+
+@keyframes breathe {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1) translate(10px, -10px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.6;
+  }
+}
+
+.breathing {
+  animation: breathe 8s ease-in-out infinite;
+}
+
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}

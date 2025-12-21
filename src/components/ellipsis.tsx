@@ -2,7 +2,7 @@ import { Tooltip } from 'antd';
 import copy from 'copy-to-clipboard';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { cn } from '@/utils';
-import { messageApi } from '@/utils/toast';
+import { message } from '@/utils/toast';
 import Icon from './icon';
 
 export interface EllipsisProps {
@@ -14,20 +14,13 @@ export interface EllipsisProps {
   copiedText?: string;
 }
 
-export default function Ellipsis({
-  text = '',
-  lineClamp = 1,
-  className,
-  middle = false,
-  copyable = false,
-  copiedText = 'Copied',
-}: EllipsisProps) {
+export default function Ellipsis({ text = '', lineClamp = 1, className, middle = false, copyable = false, copiedText = 'Copied' }: EllipsisProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [showTooltip, setShowTooltip] = useState(false);
   const [displayText, setDisplayText] = useState(text);
   const handleCopy = () => {
     copy(text);
-    messageApi().success(copiedText);
+    message().success(copiedText);
   };
   useLayoutEffect(() => {
     if (!containerRef.current) {
@@ -175,20 +168,12 @@ export default function Ellipsis({
 
   const ellipsisClass = cn(
     'overflow-hidden',
-    lineClamp === 1 && !middle
-      ? 'text-ellipsis whitespace-nowrap'
-      : lineClamp === 1 && middle
-        ? 'whitespace-nowrap'
-        : '',
+    lineClamp === 1 && !middle ? 'text-ellipsis whitespace-nowrap' : lineClamp === 1 && middle ? 'whitespace-nowrap' : '',
     className,
   );
 
   let content = (
-    <div
-      ref={containerRef}
-      className={ellipsisClass}
-      style={{ WebkitLineClamp: lineClamp }}
-    >
+    <div ref={containerRef} className={ellipsisClass} style={{ WebkitLineClamp: lineClamp }}>
       {displayText}
     </div>
   );
@@ -196,18 +181,11 @@ export default function Ellipsis({
   if (copyable) {
     content = (
       <div className="flex items-center gap-1">
-        <div
-          ref={containerRef}
-          className={cn(ellipsisClass, showTooltip ? 'flex-1 min-w-0' : '')}
-          style={{ WebkitLineClamp: lineClamp }}
-        >
+        <div ref={containerRef} className={cn(ellipsisClass, showTooltip ? 'flex-1 min-w-0' : '')} style={{ WebkitLineClamp: lineClamp }}>
           {displayText}
         </div>
         <button onClick={handleCopy} type="button">
-          <Icon
-            className="cursor-pointer hover:op-80 text-#718096 dark:text-#838383"
-            name="i-solar-copy-linear"
-          />
+          <Icon className="cursor-pointer hover:op-80 text-#718096 dark:text-#838383" name="i-solar-copy-linear" />
         </button>
       </div>
     );

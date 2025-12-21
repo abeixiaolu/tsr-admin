@@ -1,7 +1,7 @@
 import { useProgress } from '@bprogress/react';
 import { useRouterState } from '@tanstack/react-router';
 import type { ThemeConfig } from 'antd';
-import { App as AntdApp, theme as antdTheme, ConfigProvider, Modal, message, notification } from 'antd';
+import { App as AntdApp, theme as antdTheme, ConfigProvider } from 'antd';
 import enUS from 'antd/locale/en_US';
 import zhCN from 'antd/locale/zh_CN';
 import { merge } from 'lodash-es';
@@ -11,7 +11,6 @@ import { useIsMobile } from '~/hooks/is-mobile';
 import { useSettingStore } from '~/stores/settings';
 import { loadTheme } from '~/themes';
 import { useDark } from '~/themes/hook';
-import { setMessageApi, setModalApi, setNotificationApi } from '~/utils/toast';
 
 export default function ConfigureApp({ children, onlyDark }: { children: React.ReactNode; onlyDark?: boolean }) {
   const isMobile = useIsMobile();
@@ -20,12 +19,6 @@ export default function ConfigureApp({ children, onlyDark }: { children: React.R
   const { isDark } = useDark();
   const customThemeKey = useSettingStore((state) => state.settings.theme);
   const customTheme = loadTheme(customThemeKey);
-  const [messageApi, contextHolder] = message.useMessage();
-  const [notificationApi, notificationContextHolder] = notification.useNotification();
-  const [modalApi, modalContextHolder] = Modal.useModal();
-  setModalApi(modalApi);
-  setMessageApi(messageApi);
-  setNotificationApi(notificationApi);
   let theme: ThemeConfig = merge(
     {
       hashed: false,
@@ -38,10 +31,10 @@ export default function ConfigureApp({ children, onlyDark }: { children: React.R
   if (onlyDark) {
     theme = merge(
       {
-        zeroRuntime: true,
         hashed: false,
         algorithm: antdTheme.darkAlgorithm,
       },
+      customTheme.common,
       customTheme.dark,
     );
   }
@@ -62,12 +55,7 @@ export default function ConfigureApp({ children, onlyDark }: { children: React.R
 
   return (
     <ConfigProvider componentSize={isMobile ? 'middle' : 'large'} locale={antdLocale} theme={theme}>
-      <AntdApp>
-        {children}
-        {contextHolder}
-        {notificationContextHolder}
-        {modalContextHolder}
-      </AntdApp>
+      <AntdApp>{children}</AntdApp>
     </ConfigProvider>
   );
 }

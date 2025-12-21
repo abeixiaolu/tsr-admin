@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { Button } from 'antd';
 import Icon from '~/components/icon';
 
 export const Route = createFileRoute('/_dashboard/')({
@@ -8,7 +9,7 @@ export const Route = createFileRoute('/_dashboard/')({
 function RouteComponent() {
   return (
     <div>
-      Hello '/'!
+      <Button type="primary">Hello '/'!</Button>
       <Icon name={'i-solar-archive-up-minimlistic-bold-duotone'} />
       {Array.from({ length: 100 }).map((_, idx) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: to be remove

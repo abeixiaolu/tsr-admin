@@ -19,27 +19,20 @@ export default function AvatarActions() {
 
   const handleLogout = async () => {
     progress.start();
-    const res = await AUTH_API.logout({
-      data: {
-        appCode: 'fx',
-        deviceType: 'WEB',
-      },
+    await AUTH_API.logout({
+      appCode: 'fx',
+      deviceType: 'WEB',
     });
     progress.stop();
-    if (res.err) return;
     clearAuth();
-    navigate({ to: '/', replace: true });
+    navigate({ to: '/sign-in', replace: true });
   };
 
   const menuItems = [
     isMobile
       ? {
           key: 'header',
-          label: (
-            <span className="text-16px font-medium text-main">
-              {userInfo?.email}
-            </span>
-          ),
+          label: <span className="text-16px font-medium text-main">{userInfo?.email}</span>,
           disabled: true,
         }
       : null,
@@ -63,13 +56,8 @@ export default function AvatarActions() {
     >
       <HeaderBtn className="w-auto gap-3 px-3">
         <Icon name={AvatarIcon} className="size-6" />
-        <span className="hidden text-16px font-medium md:block">
-          {userInfo?.email || 'unknown'}
-        </span>
-        <Icon
-          className="text-assist size-4"
-          name="i-solar-alt-arrow-down-linear"
-        />
+        <span className="hidden text-16px font-medium md:block">{userInfo?.email || 'unknown'}</span>
+        <Icon className="text-assist size-4" name="i-solar-alt-arrow-down-linear" />
       </HeaderBtn>
     </Dropdown>
   );
