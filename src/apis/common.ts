@@ -1,14 +1,14 @@
-import request from '~/utils/request';
+import { definePost } from '~/utils/request';
 
 export const COMMON_API = {
   /** 获取oss上传签名 */
-  getSignature: request.post<any, UploadSignaturePayload>('/fx/signature/getSignature'),
+  getSignature: definePost<any, UploadSignaturePayload>('/fx/signature/getSignature'),
   /** 根据resourceID获取oss文件信息 */
-  getOssFile: request.post<GetOssFileResponse, GetOssFilePayload>('/resource/getResourceUrl'),
+  getOssFile: definePost<GetOssFileResponse, GetOssFilePayload>('/resource/getResourceUrl'),
   /** 提取身份证信息 */
-  extractId: request.post<any, any>('/ocr/extractId'),
+  extractId: definePost<any, any>('/ocr/extractId'),
   /** 获取文件url */
-  getFileUrl: request.post<string, { taskId: number }>('/resource/task/fileUrl'),
+  getFileUrl: definePost<string, { taskId: number }>('/resource/task/fileUrl'),
 };
 
 interface UploadSignaturePayload {
@@ -34,6 +34,7 @@ export interface GetOssFileResponse {
   /** 资源名 */
   resourceName: string;
 }
+
 /** 访问资源的终端类型 */
 export const ACCESS_TERM_ENUM = {
   FRONTEND: 1,

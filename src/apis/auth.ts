@@ -1,8 +1,9 @@
-import request from '~/utils/request';
+import { definePost } from '~/utils/request';
+import type { CommonResData } from './apis';
 
 export const AUTH_API = {
-  login: request.post<LoginResponse, LoginPayload>('/fx/user/login/password'),
-  logout: request.post<any, LogoutPayload>('/fx/user/login/logout'),
+  login: definePost<LoginResponse, LoginPayload>('/fx/user/login/password'),
+  logout: definePost<CommonResData, LogoutPayload>('/fx/user/login/logout'),
 };
 
 export interface LogoutPayload {
