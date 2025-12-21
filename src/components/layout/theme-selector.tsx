@@ -1,7 +1,7 @@
 import { Dropdown } from 'antd';
 import Icon from '@/components/icon';
 import type { ThemeKey } from '@/themes';
-import { themeOptions } from '@/themes';
+import { CUSTOM_THEME_MAP } from '@/themes';
 import { useSettingStore } from '~/stores/settings';
 import HeaderBtn from './header-btn';
 
@@ -11,7 +11,7 @@ export default function ThemeSelector() {
   return (
     <Dropdown
       menu={{
-        items: themeOptions,
+        items: Object.keys(CUSTOM_THEME_MAP).map((key) => ({ label: key, key })),
         selectedKeys: [theme],
         onClick: (e) => setSettings({ theme: e.key as ThemeKey }),
       }}

@@ -1,15 +1,9 @@
-import businessTheme from './business/theme.json';
-import oneloopTheme from './oneloop/theme.json';
+import { oneloop } from './oneloop/theme';
+import type { CustomTheme } from './type';
 
 export const CUSTOM_THEME_MAP = {
-  oneloop: oneloopTheme,
-  business: businessTheme,
+  oneloop,
 };
-
-export const themeOptions = [
-  { label: 'Business', key: 'business' },
-  { label: 'OneLoop', key: 'oneloop' },
-];
 
 export type ThemeKey = keyof typeof CUSTOM_THEME_MAP;
 
@@ -17,14 +11,12 @@ const cssModules = import.meta.glob('./**/*.scss', {
   query: '?inline',
   eager: true,
 });
-export function loadTheme(themeName: keyof typeof CUSTOM_THEME_MAP) {
-  const themeContent: any = CUSTOM_THEME_MAP[themeName];
+export function loadTheme(themeName: keyof typeof CUSTOM_THEME_MAP): CustomTheme {
+  const themeContent = CUSTOM_THEME_MAP[themeName];
   if (!themeContent) {
     return {};
   }
-  const existingStyleElement = document.querySelector(
-    `style[data-theme="custom"]`,
-  );
+  const existingStyleElement = document.querySelector(`style[data-theme="custom"]`);
   if (existingStyleElement) {
     existingStyleElement.remove();
   }

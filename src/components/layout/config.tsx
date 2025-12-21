@@ -31,6 +31,7 @@ export default function ConfigureApp({ children, onlyDark }: { children: React.R
       hashed: false,
       algorithm: isDark ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
     } satisfies ThemeConfig,
+    customTheme.common,
     customTheme[isDark ? 'dark' : 'light'],
   );
 
@@ -50,14 +51,14 @@ export default function ConfigureApp({ children, onlyDark }: { children: React.R
   }, [theme.token?.colorPrimary]);
 
   const progress = useProgress();
-  const routerState = useRouterState();
+  const isLoading = useRouterState({
+    select(state) {
+      return state.isLoading;
+    },
+  });
   useEffect(() => {
-    if (routerState.isLoading) {
-      progress.start();
-    } else {
-      progress.stop();
-    }
-  }, [progress, routerState]);
+    isLoading ? progress.start() : progress.stop();
+  }, [progress, isLoading]);
 
   return (
     <ConfigProvider componentSize={isMobile ? 'middle' : 'large'} locale={antdLocale} theme={theme}>
