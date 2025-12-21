@@ -1,4 +1,4 @@
-import ExampleIcon from '~icons/example/example.svg?react';
+import ExampleIcon from '@icons/example/example.svg?react';
 import type { RouteInfoItem } from './type';
 import { flatRouteData } from './utils';
 

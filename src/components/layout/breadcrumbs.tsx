@@ -1,3 +1,4 @@
+import BackIcon from '@icons/internal/back.svg?react';
 import { Link, useRouterState } from '@tanstack/react-router';
 import { Breadcrumb } from 'antd';
 import { useLayoutEffect, useRef, useState } from 'react';
@@ -7,7 +8,6 @@ import { useIsMobile } from '@/hooks/is-mobile';
 import { flattenRouteData } from '@/router/data';
 import type { RouteInfoItem } from '@/router/type';
 import { findRouteAncestors } from '@/router/utils';
-import BackIcon from '~icons/internal/back.svg?react';
 import Icon from '../common/icon';
 
 export default function Breadcrumbs() {

@@ -1,7 +1,7 @@
+import EmailIcon from '@icons/internal/email.svg?react';
+import ServiceIcon from '@icons/internal/service.svg?react';
 import { Popover } from 'antd';
 import Icon from '@/components/common/icon';
-import EmailIcon from '~icons/internal/email.svg?react';
-import ServiceIcon from '~icons/internal/service.svg?react';
 import HeaderBtn from './header-btn';
 
 export default function CustomerService() {

@@ -1,3 +1,4 @@
+import Shop from '@icons/internal/shop.svg?react';
 import { Dropdown, message, Popover } from 'antd';
 import copy from 'copy-to-clipboard';
 import { useState } from 'react';
@@ -8,7 +9,6 @@ import text from '@/assets/logo/text.svg';
 import Icon from '@/components/common/icon';
 import { useSettingStore } from '@/stores/settings';
 import { useDark } from '@/themes/hook';
-import Shop from '~icons/internal/shop.svg?react';
 import Ellipsis from '../common/ellipsis';
 import HeaderBtn from './header-btn';
 

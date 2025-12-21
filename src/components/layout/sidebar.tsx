@@ -1,3 +1,4 @@
+import CollapseIcon from '@icons/internal/collapse.svg?react';
 import { useRouterState } from '@tanstack/react-router';
 import { Drawer, Menu } from 'antd';
 import type { MenuItemType } from 'antd/es/menu/interface';
@@ -7,7 +8,6 @@ import { flattenRouteData, routeData } from '@/router/data';
 import type { RouteInfoItem } from '@/router/type';
 import { findRouteAncestors } from '@/router/utils';
 import { cn } from '@/utils';
-import CollapseIcon from '~icons/internal/collapse.svg?react';
 import MenuHeader from './menu-header';
 import { LocaleMenuItem } from './menu-label';
 

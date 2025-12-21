@@ -6,7 +6,7 @@ export interface IconProps {
   className?: string;
 }
 
-const defaultClass = 'size-1em align-[-0.125em]';
+const defaultClass = 'size-1em align-[-0.125em] inline-block';
 
 export default function Icon({ name, className }: IconProps) {
   if (typeof name === 'string') {
