@@ -1,4 +1,4 @@
-import { definePost } from '~/utils/request';
+import { definePost } from '@/utils/request';
 
 export const COMMON_API = {
   /** 获取oss上传签名 */

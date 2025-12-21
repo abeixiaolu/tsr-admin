@@ -4,7 +4,7 @@ import 'virtual:uno.css';
 import '@/styles/global.scss';
 import { RouterProvider } from '@tanstack/react-router';
 import { router } from './router';
-import '~/locales';
+import '@/locales';
 
 // biome-ignore lint/style/noNonNullAssertion: always have
 createRoot(document.getElementById('root')!).render(

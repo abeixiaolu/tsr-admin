@@ -3,9 +3,9 @@ import { useNavigate } from '@tanstack/react-router';
 import { Dropdown } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { AUTH_API } from '@/apis/auth';
-import Icon from '@/components/icon';
+import Icon from '@/components/common/icon';
+import { useIsMobile } from '@/hooks/is-mobile';
 import { useAuthStore } from '@/stores/auth';
-import { useIsMobile } from '~/hooks/is-mobile';
 import AvatarIcon from '~icons/internal/avatar.svg?react';
 import HeaderBtn from './header-btn';
 

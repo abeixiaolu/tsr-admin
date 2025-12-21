@@ -1,7 +1,7 @@
 import type { ElementType } from 'react';
-import { cn } from '~/utils';
+import { cn } from '@/utils';
 
-interface IconProps {
+export interface IconProps {
   name: string | ElementType;
   className?: string;
 }

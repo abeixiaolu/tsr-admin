@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import type { ThemeKey } from '~/themes';
-import type { ColorMode } from '~/themes/hook';
-import getEnv from '~/utils/get-env';
-import unifiedStorage from '~/utils/storage';
+import type { ThemeKey } from '@/themes';
+import type { ColorMode } from '@/themes/hook';
+import getEnv from '@/utils/get-env';
+import unifiedStorage from '@/utils/storage';
 
 interface Settings {
   lang: 'zh-CN' | 'en-US';
@@ -40,10 +40,8 @@ export const useSettingStore = create<SettingState>()(
         from: '',
         to: '',
       },
-      setNavigation: (from: string, to: string) =>
-        set({ navigation: { from, to } }),
-      setSettings: (newSettings: Partial<Settings>) =>
-        set({ settings: { ...get().settings, ...newSettings } }),
+      setNavigation: (from: string, to: string) => set({ navigation: { from, to } }),
+      setSettings: (newSettings: Partial<Settings>) => set({ settings: { ...get().settings, ...newSettings } }),
     }),
     {
       name: 'global',

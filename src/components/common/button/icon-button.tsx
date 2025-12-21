@@ -11,7 +11,7 @@ export interface IconButtonProps extends ButtonProps {
 export default function IconButton({ icon, iconProps, children, ...props }: IconButtonProps) {
   return (
     <Button {...props}>
-      <Icon name={icon} size="calc(1em * 1.2)" {...iconProps} />
+      <Icon name={icon} {...iconProps} />
       {children}
     </Button>
   );

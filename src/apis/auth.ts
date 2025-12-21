@@ -1,4 +1,4 @@
-import { definePost } from '~/utils/request';
+import { definePost } from '@/utils/request';
 import type { CommonResData } from './apis';
 
 export const AUTH_API = {

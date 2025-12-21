@@ -3,15 +3,15 @@ import { Button, Form, Input } from 'antd';
 import { useState } from 'react';
 import { z } from 'zod';
 import { AUTH_API } from '@/apis/auth';
+import loginHero from '@/assets/login-hero.png';
+import logoTextDark from '@/assets/logo/dark-text.svg';
+import logoIcon from '@/assets/logo/icon.svg';
+import ConfigureApp from '@/components/layout/config';
 import { useAuthStore } from '@/stores/auth';
+import styles from '@/styles/sign-in.module.scss';
 import { cn } from '@/utils';
-import loginHero from '~/assets/login-hero.png';
-import logoTextDark from '~/assets/logo/dark-text.svg';
-import logoIcon from '~/assets/logo/icon.svg';
-import ConfigureApp from '~/components/layout/config';
-import styles from '~/styles/sign-in.module.scss';
-import { encrypt } from '~/utils/encrypt';
-import { message } from '~/utils/toast';
+import { encrypt } from '@/utils/encrypt';
+import { message } from '@/utils/toast';
 
 export const Route = createFileRoute('/(auth)/sign-in')({
   component: Login,

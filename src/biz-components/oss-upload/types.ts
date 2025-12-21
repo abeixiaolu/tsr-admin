@@ -1,6 +1,6 @@
 import type { UploadFile, UploadProps } from 'antd';
 import type { ReactNode } from 'react';
-import type { IconButtonProps } from '@/components/button/icon-button';
+import type { IconButtonProps } from '@/components/common/button/icon-button';
 
 export type UploadTriggerType = null | 'drag';
 

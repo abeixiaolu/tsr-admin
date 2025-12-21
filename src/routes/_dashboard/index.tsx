@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from 'antd';
-import Icon from '~/components/icon';
+import Icon from '@/components/common/icon';
 
 export const Route = createFileRoute('/_dashboard/')({
   component: RouteComponent,

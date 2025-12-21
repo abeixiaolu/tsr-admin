@@ -1,5 +1,5 @@
 import type { ElementType } from 'react';
-import type { FileRoutesByFullPath } from '~/routeTree.gen';
+import type { FileRoutesByFullPath } from '@/routeTree.gen';
 
 export type FileRoutePath = LiteralUnion<keyof FileRoutesByFullPath>;
 

@@ -1,8 +1,8 @@
 import { Dropdown } from 'antd';
-import Icon from '@/components/icon';
+import Icon from '@/components/common/icon';
+import { useSettingStore } from '@/stores/settings';
 import type { ThemeKey } from '@/themes';
 import { CUSTOM_THEME_MAP } from '@/themes';
-import { useSettingStore } from '~/stores/settings';
 import HeaderBtn from './header-btn';
 
 export default function ThemeSelector() {

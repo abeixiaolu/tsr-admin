@@ -1,6 +1,6 @@
 import { Badge, Popover } from 'antd';
-import Icon from '@/components/icon';
-import { useSettingStore } from '~/stores/settings';
+import Icon from '@/components/common/icon';
+import { useSettingStore } from '@/stores/settings';
 import CollapseIcon from '~icons/internal/collapse.svg?react';
 import Notification from '~icons/internal/notification.svg?react';
 import Avatar from './avatar';

@@ -5,12 +5,11 @@ import { useTranslation } from 'react-i18next';
 import darkText from '@/assets/logo/dark-text.svg';
 import icon from '@/assets/logo/icon.svg';
 import text from '@/assets/logo/text.svg';
-import Icon from '@/components/icon';
-import { useIsMobile } from '~/hooks/is-mobile';
-import { useSettingStore } from '~/stores/settings';
-import { useDark } from '~/themes/hook';
+import Icon from '@/components/common/icon';
+import { useSettingStore } from '@/stores/settings';
+import { useDark } from '@/themes/hook';
 import Shop from '~icons/internal/shop.svg?react';
-import Ellipsis from '../ellipsis';
+import Ellipsis from '../common/ellipsis';
 import HeaderBtn from './header-btn';
 
 interface MenuHeaderProps {

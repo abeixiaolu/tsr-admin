@@ -1,6 +1,6 @@
 import { Outlet } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
-import { useIsMobile, useIsTablet } from '~/hooks/is-mobile';
+import { useIsMobile, useIsTablet } from '@/hooks/is-mobile';
 import ConfigureApp from './config';
 import Header from './header';
 import Sidebar from './sidebar';

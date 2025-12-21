@@ -1,5 +1,5 @@
 import axios, { type AxiosError, type AxiosRequestConfig } from 'axios';
-import { useAuthStore } from '~/stores/auth';
+import { useAuthStore } from '@/stores/auth';
 import getEnv from './get-env';
 import { message } from './toast';
 

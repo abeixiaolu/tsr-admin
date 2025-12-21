@@ -2,8 +2,9 @@ import { ProgressProvider } from '@bprogress/react';
 import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { Modal, message, notification } from 'antd';
-import ConfigureApp from '~/components/layout/config';
-import { setMessageApi, setModalApi, setNotificationApi } from '~/utils/toast';
+import ConfigureApp from '@/components/layout/config';
+import getEnv from '@/utils/get-env';
+import { setMessageApi, setModalApi, setNotificationApi } from '@/utils/toast';
 
 const RootLayout = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -12,6 +13,7 @@ const RootLayout = () => {
   setModalApi(modalApi);
   setMessageApi(messageApi);
   setNotificationApi(notificationApi);
+  console.log('getEnv().DEV: ', getEnv().DEV);
   return (
     <ProgressProvider>
       <ConfigureApp>
@@ -19,7 +21,7 @@ const RootLayout = () => {
         {notificationContextHolder}
         {modalContextHolder}
         <Outlet />
-        <TanStackRouterDevtools position="bottom-right" />
+        {getEnv().DEV && <TanStackRouterDevtools position="bottom-right" />}
       </ConfigureApp>
     </ProgressProvider>
   );

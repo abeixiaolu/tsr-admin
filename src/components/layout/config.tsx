@@ -7,10 +7,10 @@ import zhCN from 'antd/locale/zh_CN';
 import { merge } from 'lodash-es';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useIsMobile } from '~/hooks/is-mobile';
-import { useSettingStore } from '~/stores/settings';
-import { loadTheme } from '~/themes';
-import { useDark } from '~/themes/hook';
+import { useIsMobile } from '@/hooks/is-mobile';
+import { useSettingStore } from '@/stores/settings';
+import { loadTheme } from '@/themes';
+import { useDark } from '@/themes/hook';
 
 export default function ConfigureApp({ children, onlyDark }: { children: React.ReactNode; onlyDark?: boolean }) {
   const isMobile = useIsMobile();

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import type { LoginResponse } from '@/apis/apis';
+import type { LoginResponse } from '@/apis/auth';
 import unifiedStorage from '@/utils/storage';
 
 interface AuthState {

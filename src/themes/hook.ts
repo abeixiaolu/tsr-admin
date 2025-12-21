@@ -1,7 +1,7 @@
 import type { MouseEvent } from 'react';
 import { useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
-import { useSettingStore } from '~/stores/settings';
+import { useSettingStore } from '@/stores/settings';
 
 export type ColorMode = 'light' | 'dark' | 'auto';
 export type Theme = 'light' | 'dark';
@@ -32,8 +32,7 @@ export function useColorMode() {
 
 export function useDark() {
   const { system, colorMode, handleChangeColorMode } = useColorMode();
-  const isDark =
-    colorMode === 'dark' || (colorMode === 'auto' && system === 'dark');
+  const isDark = colorMode === 'dark' || (colorMode === 'auto' && system === 'dark');
   useEffect(() => {
     document.documentElement.classList.toggle('dark', isDark);
   }, [isDark]);
@@ -45,9 +44,7 @@ export function useDark() {
         handleChangeColorMode('auto');
       }
     };
-    const isAppearanceTransition = !window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    ).matches;
+    const isAppearanceTransition = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (!isAppearanceTransition) {
       setTheme();
@@ -55,20 +52,14 @@ export function useDark() {
     }
     const x = event.clientX;
     const y = event.clientY;
-    const endRadius = Math.hypot(
-      Math.max(x, innerWidth - x),
-      Math.max(y, innerHeight - y),
-    );
+    const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
     await document.startViewTransition(async () => {
       // eslint-disable-next-line react-dom/no-flush-sync
       flushSync(() => {
         setTheme();
       });
     }).ready;
-    const clipPath = [
-      `circle(0px at ${x}px ${y}px)`,
-      `circle(${endRadius}px at ${x}px ${y}px)`,
-    ];
+    const clipPath = [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`];
     // isDark is the old theme here
     document.documentElement.animate(
       {
@@ -78,9 +69,7 @@ export function useDark() {
         duration: 400,
         easing: 'ease-out',
         fill: 'forwards',
-        pseudoElement: !isDark
-          ? '::view-transition-old(root)'
-          : '::view-transition-new(root)',
+        pseudoElement: !isDark ? '::view-transition-old(root)' : '::view-transition-new(root)',
       },
     );
   };

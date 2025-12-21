@@ -1,6 +1,6 @@
 import { Dropdown } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useSettingStore } from '~/stores/settings';
+import { useSettingStore } from '@/stores/settings';
 import HeaderBtn from './header-btn';
 
 const langOptions = [
@@ -31,9 +31,7 @@ export default function LangSelector() {
         onClick: (e) => handleChangeLanguage(e.key),
       }}
     >
-      <HeaderBtn className="font-medium text-16px!">
-        {langOptions.find((item) => item.key === i18n.language)?.display}
-      </HeaderBtn>
+      <HeaderBtn className="font-medium text-16px!">{langOptions.find((item) => item.key === i18n.language)?.display}</HeaderBtn>
     </Dropdown>
   );
 }
