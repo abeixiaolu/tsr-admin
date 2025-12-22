@@ -1,6 +1,5 @@
 import { useProgress } from '@bprogress/react';
 import AvatarIcon from '@icons/internal/avatar.svg?react';
-import { useNavigate } from '@tanstack/react-router';
 import { Dropdown } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { AUTH_API } from '@/apis/auth';
@@ -12,7 +11,6 @@ import HeaderBtn from './header-btn';
 export default function AvatarActions() {
   const userInfo = useAuthStore((state) => state.userInfo);
   const clearAuth = useAuthStore((state) => state.clearAuth);
-  const navigate = useNavigate();
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const progress = useProgress();
@@ -25,7 +23,6 @@ export default function AvatarActions() {
     });
     progress.stop();
     clearAuth();
-    navigate({ to: '/sign-in', replace: true });
   };
 
   const menuItems = [

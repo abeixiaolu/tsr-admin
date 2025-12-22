@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import type { LoginResponse } from '@/apis/auth';
+import { router } from '@/router';
 import unifiedStorage from '@/utils/storage';
 
 interface AuthState {
@@ -18,7 +19,10 @@ export const useAuthStore = create<AuthState>()(
       token: '',
       setUserInfo: (userInfo: LoginResponse) => set({ userInfo }),
       setToken: (token: string) => set({ token }),
-      clearAuth: () => set({ userInfo: null, token: '' }),
+      clearAuth: () => {
+        set({ userInfo: null, token: '' });
+        router.navigate({ to: '/sign-in', search: { redirectUrl: router.state.location.pathname }, replace: true });
+      },
     }),
     {
       name: 'auth',

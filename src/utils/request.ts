@@ -24,6 +24,7 @@ function createRequestInstance(baseURL = getEnv().VITE_APP_API_URL) {
     (response) => {
       const { respCode, respMsg } = response.data;
       if (AUTH_ERROR_CODES.includes(respCode)) {
+        useAuthStore.getState().clearAuth();
         return Promise.reject(new Error(respMsg || 'Unauthorized'));
       }
       if (respCode !== SUCCESS_CODE) {
