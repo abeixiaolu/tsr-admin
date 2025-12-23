@@ -11,7 +11,8 @@
     "build:prod": "tsc -b && vite build --mode prod",
     "preview": "vite preview",
     "prepare": "simple-git-hooks",
-    "check": "biome check --write"
+    "check": "biome check",
+    "format": "biome check --write"
   },
   "dependencies": {
     "@bprogress/react": "^1.2.7",
