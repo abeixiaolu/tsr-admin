@@ -1,8 +1,5 @@
 import type { FileRoutePath, RouteInfoItem } from './type';
-export function flatRouteData(
-  routeData: RouteInfoItem[],
-  parentKey?: FileRoutePath,
-) {
+export function flatRouteData(routeData: RouteInfoItem[], parentKey?: FileRoutePath) {
   let data: RouteInfoItem[] = [];
   routeData.forEach((item) => {
     data.push({
@@ -17,10 +14,7 @@ export function flatRouteData(
   return data;
 }
 
-export function findRouteAncestors(
-  flatRoutes: RouteInfoItem[],
-  key: string,
-): RouteInfoItem[] {
+export function findRouteAncestors(flatRoutes: RouteInfoItem[], key: string): RouteInfoItem[] {
   const ancestors: RouteInfoItem[] = [];
   flatRoutes.forEach((route) => {
     if (route.key === key) {

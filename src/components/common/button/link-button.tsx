@@ -1,10 +1,11 @@
+import type { ElementType } from 'react';
 import { cn } from '@/utils';
 import type { IconProps } from '../icon';
 import Icon from '../icon';
 
 interface LinkButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  children: React.ReactNode;
-  icon?: string;
+  children?: React.ReactNode;
+  icon?: string | ElementType;
   iconProps?: Partial<IconProps>;
   position?: 'left' | 'right';
 }

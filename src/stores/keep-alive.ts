@@ -18,8 +18,7 @@ export const useKeepAliveStore = create<KeepAliveStore>((set) => ({
     from: '',
     to: '',
   },
-  setNavigation: (from: string, to: string) =>
-    set({ navigation: { from, to } }),
+  setNavigation: (from: string, to: string) => set({ navigation: { from, to } }),
   addInclude: (path: string) =>
     set((state) => {
       if (state.include.has(path)) return {};

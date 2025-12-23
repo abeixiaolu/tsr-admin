@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/noUnusedVariables: anyway */
 /// <reference types="vite/client" />
 /// <reference types="vite-plugin-svgr/client" />
 
@@ -8,7 +9,6 @@ interface ImportMetaEnv {
   readonly VITE_APP_ENV_TAG: string;
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: no need
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }

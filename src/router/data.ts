@@ -9,6 +9,11 @@ export const routeData: RouteInfoItem[] = [
     icon: ExampleIcon,
   },
   {
+    key: '/demo',
+    label: 'menu.demo',
+    icon: ExampleIcon,
+  },
+  {
     key: '/order',
     label: 'menu.order',
     icon: ExampleIcon,
