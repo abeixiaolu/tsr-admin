@@ -3,6 +3,7 @@ import { VerticalTabs } from '@/components/common/tabs';
 import ButtonDemo from './components/button';
 import SchemaFormDemo from './components/form';
 import OverflowMarqueeDemo from './components/overflow-marquee';
+import ScaleTextDemo from './components/scale-text';
 import ProTableDemo from './components/table';
 
 export default function DemoPage() {
@@ -31,6 +32,12 @@ export default function DemoPage() {
       value: 'form',
       icon: 'i-solar-notebook-broken',
       component: <SchemaFormDemo />,
+    },
+    {
+      label: 'Scale Text',
+      value: 'scale-text',
+      icon: 'i-solar-notebook-broken',
+      component: <ScaleTextDemo />,
     },
   ];
   return (

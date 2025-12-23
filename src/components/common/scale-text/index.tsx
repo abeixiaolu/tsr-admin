@@ -33,7 +33,7 @@ const ScaleText: React.FC<ScaleTextProps> = ({ children, baseFontSize, className
   }, [containerSize?.width, baseFontSize]);
 
   return (
-    <div ref={containerRef} className={cn('overflow-hidden whitespace-nowrap grid max-w-full items-baseline', className)} style={style}>
+    <div ref={containerRef} className={cn('overflow-hidden whitespace-nowrap grid max-w-full items-center', className)} style={style}>
       <span style={{ fontSize: `${fontSize}px`, transition: 'font-size 0.1s', gridArea: '1/1' }}>{children}</span>
       <span
         ref={hiddenTextRef}
