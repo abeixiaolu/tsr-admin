@@ -1,12 +1,12 @@
 import type { DrawerProps } from 'antd';
 import { Button, Drawer, Flex, Form } from 'antd';
-import { useState } from 'react';
+import { cloneElement, type JSX, useCallback, useMemo, useState } from 'react';
 import type { SchemaFormProps } from './schema-form';
 import SchemaForm from './schema-form';
 
 export interface DrawerFormProps<T extends Record<string, any> = any> extends Omit<SchemaFormProps<T>, 'title' | 'onFinish'> {
   title?: React.ReactNode;
-  trigger?: React.ReactNode;
+  trigger?: JSX.Element;
   drawerProps?: DrawerProps;
   onFinish?: (values: T) => Promise<boolean | undefined>;
   width?: number | string;
@@ -31,13 +31,16 @@ export default function DrawerForm<T extends Record<string, any>>({
 
   const open = propOpen !== undefined ? propOpen : internalOpen;
 
-  const setOpen = (newOpen: boolean) => {
-    if (onOpenChange) {
-      onOpenChange(newOpen);
-    } else {
-      setInternalOpen(newOpen);
-    }
-  };
+  const setOpen = useCallback(
+    (newOpen: boolean) => {
+      if (onOpenChange) {
+        onOpenChange(newOpen);
+      } else {
+        setInternalOpen(newOpen);
+      }
+    },
+    [onOpenChange],
+  );
 
   const handleFinish = async (values: T) => {
     if (onFinish) {
@@ -51,11 +54,24 @@ export default function DrawerForm<T extends Record<string, any>>({
     }
   };
 
+  const triggerDom = useMemo(() => {
+    if (!trigger) {
+      return null;
+    }
+
+    return cloneElement(trigger, {
+      key: 'trigger',
+      ...trigger.props,
+      onClick: async (e: any) => {
+        setOpen(!open);
+        trigger.props?.onClick?.(e);
+      },
+    });
+  }, [setOpen, trigger, open]);
+
   return (
     <>
-      <button type="button" className="inline-block" onClick={() => setOpen(true)}>
-        {trigger}
-      </button>
+      {triggerDom}
       <Drawer
         title={title}
         size={+(width || 468)}

@@ -36,7 +36,7 @@ export default function DemoPage() {
     {
       label: 'Scale Text',
       value: 'scale-text',
-      icon: 'i-solar-notebook-broken',
+      icon: 'i-solar-text-selection-broken',
       component: <ScaleTextDemo />,
     },
   ];

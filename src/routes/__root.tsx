@@ -14,7 +14,6 @@ const RootLayout = () => {
   setModalApi(modalApi);
   setMessageApi(messageApi);
   setNotificationApi(notificationApi);
-  console.log('getEnv().DEV: ', getEnv().DEV);
   return (
     <ProgressProvider>
       <ConfigureApp>

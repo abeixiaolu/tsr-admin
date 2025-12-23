@@ -22,12 +22,10 @@ export default function VerticalTabs({ className, activeTab, onTabChange, tabs }
 
   useLayoutEffect(() => {
     if (!tabs.length) return;
+    const activeElement = itemsRef.current.get(activeTab);
     const updatePosition = () => {
-      const activeElement = itemsRef.current.get(activeTab);
       if (!activeElement) return;
-
       const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = activeElement;
-
       setIndicatorStyle({
         left: offsetLeft,
         top: offsetTop,
@@ -40,12 +38,13 @@ export default function VerticalTabs({ className, activeTab, onTabChange, tabs }
     updatePosition();
 
     const observer = new ResizeObserver(() => {
-      requestAnimationFrame(updatePosition);
+      requestAnimationFrame(() => {
+        updatePosition();
+      });
     });
 
-    const container = containerRef.current;
-    if (container) {
-      observer.observe(container);
+    if (activeElement) {
+      observer.observe(activeElement);
     }
     return () => observer.disconnect();
   }, [activeTab, tabs]);
