@@ -33,13 +33,17 @@ export function QueryFilter<T extends Record<string, any>>({
   const form = propForm || internalForm;
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState<any>({});
+  const initialCollapsed = defaultCollapsed ?? true;
+  const [transitionEnabled, setTransitionEnabled] = useState(initialCollapsed);
   const { fieldConfigs, orderedFields, handleValuesChange } = useSchemaForm(initialConfig, form, onValuesChange);
-  const { containerRef, formRef, currentHeight, itemWidth, emptyCount, singleRowHeight, collapsed, toggleCollapse } = useResponsiveFilter({
-    defaultCollapsed,
-    minWidth,
-    gap,
-    orderedFields,
-  });
+  const { containerRef, formRef, currentHeight, itemWidth, emptyCount, singleRowHeight, collapsed, toggleCollapse, hasMeasured } =
+    useResponsiveFilter({
+      defaultCollapsed,
+      minWidth,
+      gap,
+      orderedFields,
+    });
+  const resolvedHeight = hasMeasured && Number.isFinite(currentHeight) ? currentHeight + PADDING * 2 : 'auto';
 
   const handleReset = () => {
     form.resetFields();
@@ -61,6 +65,13 @@ export function QueryFilter<T extends Record<string, any>>({
     setValues(newValues);
     form.setFieldsValue(newValues);
     onSearch?.(newValues);
+  };
+
+  const handleToggleCollapse = () => {
+    if (!transitionEnabled) {
+      setTransitionEnabled(true);
+    }
+    toggleCollapse();
   };
   const title =
     titleRender === false ? null : typeof titleRender === 'function' ? (
@@ -153,10 +164,11 @@ export function QueryFilter<T extends Record<string, any>>({
         <div
           ref={containerRef}
           style={{
-            height: currentHeight + PADDING * 2 || 'auto',
+            height: resolvedHeight,
             padding: PADDING,
+            visibility: hasMeasured ? 'visible' : 'hidden',
           }}
-          className="relative overflow-hidden transition-height duration-300"
+          className={cn('relative overflow-hidden', transitionEnabled && hasMeasured && 'transition-height duration-300')}
         >
           <Form
             form={form}
@@ -179,7 +191,7 @@ export function QueryFilter<T extends Record<string, any>>({
                   key={name}
                   style={{
                     flex: `0 0 ${itemWidth}px`,
-                    maxWidth: `${itemWidth}px`, // Ensure it doesn't overflow
+                    maxWidth: `${itemWidth}px`,
                   }}
                 >
                   <Field config={Object.assign({}, fieldConfigs[name], { noStyle: true })} />
@@ -217,7 +229,7 @@ export function QueryFilter<T extends Record<string, any>>({
                       <LinkButton
                         icon={collapsed ? 'i-lucide-chevrons-down' : 'i-lucide-chevrons-up'}
                         className="block flex items-center justify-center"
-                        onClick={toggleCollapse}
+                        onClick={handleToggleCollapse}
                       ></LinkButton>
                     )}
                   </div>
