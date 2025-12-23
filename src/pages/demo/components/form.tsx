@@ -15,9 +15,6 @@ const demoConfig: FieldConfig<FormData>[] = [
     type: 'input',
     label: 'Country',
     name: 'country',
-    onChange: (value) => {
-      message().success(`Country changed: ${value}`);
-    },
     rules: [
       {
         required: true,
@@ -29,9 +26,19 @@ const demoConfig: FieldConfig<FormData>[] = [
     type: 'select',
     label: 'Select Box',
     name: 'select',
-    hide: ({ formData }) => {
-      return formData.country === 'China';
-    },
+    dependencies: [
+      {
+        deps: 'country',
+        effect: ({ country }) => {
+          return {
+            label: `${country || ''} Select Box`,
+            props: {
+              placeholder: `Please select ${country}`,
+            },
+          };
+        },
+      },
+    ],
     props: {
       placeholder: 'Please select',
       showSearch: {
@@ -40,20 +47,37 @@ const demoConfig: FieldConfig<FormData>[] = [
           message().success(`Search: ${value}`);
         },
       },
+      options: [
+        { label: 'Option A', value: 'a' },
+        { label: 'Option B', value: 'b' },
+      ],
     },
   },
   {
     type: 'input',
-    label: 'hidden',
+    label: 'Select a to hide this',
     name: 'hidden',
     rules: [{ required: true, message: 'Please input hidden' }],
-    hide: {
-      expression: ({ formData }) => {
-        return formData.select === 'a';
+    hide: false,
+    dependencies: [
+      {
+        deps: 'select',
+        effect({ select }) {
+          return {
+            hide: select === 'a',
+          };
+        },
       },
-      clearValueOnHide: false,
-    },
+      {
+        deps: 'country',
+        effect(values) {
+          console.log('values: ', values);
+          return {};
+        },
+      },
+    ],
   },
+  { type: 'textarea', label: 'Random', name: 'random' },
 ];
 
 export default function SchemaFormDemo() {

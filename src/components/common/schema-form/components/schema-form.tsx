@@ -1,7 +1,6 @@
 import type { FormProps } from 'antd';
 import { Form } from 'antd';
 import type { ReactNode } from 'react';
-import { useEffect, useRef } from 'react';
 import { useSchemaForm } from '../hooks';
 import type { FieldConfig } from '../types';
 import { Field } from './field';
@@ -29,10 +28,8 @@ import { Field } from './field';
  *
  * ### 2) 字段联动（dependencies）
  *
- * - `compute`：纯计算（同步、无副作用），返回值会注入到 `ctx.computed`
- * - `effects`：同步返回字段配置 patch（用于修改 type/props/rules/label 等）
- * - `watcher`：用于异步副作用（支持取消、节流/防抖、去重/缓存）。推荐让 watcher **return 一个 patch**，
- *   由运行时自动 `setField(target, patch)` 应用（更容易做缓存）。
+ * - `deps`：依赖字段名数组
+ * - `effect`：副作用函数，返回 patch
  *
  * ```ts
  * {
@@ -41,16 +38,11 @@ import { Field } from './field';
  *   label: '公司',
  *   dependencies: [
  *     {
- *       deps: ['region', 'userType'],
- *       compute: ({ formData }) => formData.userType === 'company',
- *       effects: ({ computed }) => ({ hidden: !computed }),
- *       watcher: async ({ formData, computed, signal }) => {
- *         if (!computed) return { props: { options: [] } }
- *         const options = await api.fetchCompanies(formData.region, { signal })
- *         return { props: { options } }
- *       },
- *       debounce: 200,
- *       cacheTtl: 30_000,
+ *       deps: ['region'],
+ *       effect: ([region]) => {
+            if (region === 'china') return { props: { options: [...] } };
+            return {};
+         }
  *     },
  *   ],
  * }
@@ -69,7 +61,6 @@ import { Field } from './field';
 export interface SchemaFormProps<FormData extends Record<string, any> = any> extends FormProps {
   config: FieldConfig<FormData>[];
   children?: ReactNode;
-  triggerDependenciesOnInit?: boolean;
 }
 
 function getFieldTypeKey(type: unknown) {
@@ -85,23 +76,14 @@ export default function SchemaForm<T extends Record<string, any>>({
   form: propForm,
   onValuesChange,
   children,
-  triggerDependenciesOnInit,
   ...restProps
 }: SchemaFormProps<T>) {
   const [internalForm] = Form.useForm<T>();
   const form = propForm || internalForm;
+  // fieldConfigs, orderedFields, handleValuesChange are returned from hook
   const { fieldConfigs, orderedFields, handleValuesChange } = useSchemaForm(initialConfig, form, onValuesChange);
 
-  const handleValuesChangeRef = useRef(handleValuesChange);
-  // eslint-disable-next-line react-hooks/refs
-  handleValuesChangeRef.current = handleValuesChange;
-
-  useEffect(() => {
-    if (triggerDependenciesOnInit) {
-      const values = form.getFieldsValue(true);
-      handleValuesChangeRef.current(values, values);
-    }
-  }, [triggerDependenciesOnInit, form]);
+  // triggerDependenciesOnInit removed as dependencies are now reactive via Form.useWatch
 
   return (
     <Form

@@ -4,45 +4,31 @@ import type { WidgetPropsMap } from './widgets';
 
 export type WidgetKey = keyof WidgetPropsMap;
 
-export type EffectResult<FormData> = Partial<FieldConfig<FormData>>;
-
-export interface DependencyHandlerCtx<FormData, Computed = any> {
-  changedField: string;
-  changedValue: any;
-  formData: FormData;
+export interface DependencyContext<FormData> {
   form: FormInstance<FormData>;
-  getField: (name: string) => FieldConfig<FormData> | undefined;
-  setField: (name: string, patch: Partial<FieldConfig<FormData>>, opts?: { replace?: boolean }) => void;
-  computed?: Computed;
-  signal?: AbortSignal;
+  // We can add more context here if needed, e.g. formData (all values)
+  // but usually values from useWatch (passed as first arg to effect) is enough.
 }
 
-export interface DependencySpec<FormData, Computed = any> {
-  deps: string[];
-  compute?: (ctx: { formData: FormData; changedField?: string }) => Computed;
-  effects?: (ctx: DependencyHandlerCtx<FormData, Computed>) => EffectResult<FormData> | undefined;
-  watcher?: (ctx: DependencyHandlerCtx<FormData, Computed>) => Promise<EffectResult<FormData> | undefined> | EffectResult<FormData> | undefined;
-  throttle?: number;
-  debounce?: number;
+export interface DependencySpec<FormData> {
   /**
-   * watcher 缓存 TTL（毫秒）。
-   * 仅当 watcher 返回 patch（EffectResult）时生效。
+   * 依赖字段名。
+   * 可以是单个字段名 (string) 或字段名数组 (string[])。
+   * 如果传入 []，则 effect 仅在组件 mount 时执行一次（类似 useEffect([])）。
    */
-  cacheTtl?: number;
+  deps: string;
+
   /**
-   * 是否按 deps snapshot key 做 in-flight 去重。
-   * 默认：true
+   * 副作用函数。
+   * 当依赖字段值变化时执行，返回一个新的 Partial<FieldConfig> 用于合并。
+   * @param value 依赖字段的当前值。如果是单字段依赖，则是该字段值；如果是数组依赖，则是值数组。
+   * @param ctx 上下文，包含 form 实例等
    */
-  dedupe?: boolean;
+  effect?: (value: any, ctx: DependencyContext<FormData>) => Partial<FieldConfig<FormData>> | undefined;
 }
 
 type BaseFieldConfig<FormData> = FormItemProps & {
-  hide?:
-    | ((ctx: { formData: FormData }) => boolean)
-    | {
-        expression: (ctx: { formData: FormData }) => boolean;
-        clearValueOnHide?: boolean;
-      };
+  hide?: boolean;
   dependencies?: DependencySpec<FormData>[];
   onChange?: (value: any) => void;
 };

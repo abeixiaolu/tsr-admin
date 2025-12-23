@@ -1,5 +1,5 @@
 import { mergeWith } from 'lodash-es';
-import type { DependencySpec, FieldConfig } from '../types';
+import type { FieldConfig } from '../types';
 
 export function mergeFieldConfig<T extends Record<string, any>>(base: Partial<FieldConfig<T>>, patch: Partial<FieldConfig<T>>) {
   return mergeWith({}, base, patch, (objValue, srcValue) => {
@@ -15,31 +15,4 @@ export function normalizeInitialConfig<T extends Record<string, any>>(initialCon
     normalized[c.name] = c;
   });
   return normalized;
-}
-
-export function buildDependencyMap<T extends Record<string, any>>(initialConfig: FieldConfig<T>[]) {
-  const depMap: Record<string, Set<string>> = {};
-  initialConfig.forEach((c) => {
-    const specs = (c.dependencies ?? []) as DependencySpec<T>[];
-    specs.forEach((spec) => {
-      spec.deps.forEach((dep) => {
-        if (!depMap[dep]) depMap[dep] = new Set();
-        depMap[dep].add(c.name);
-      });
-    });
-  });
-  return depMap;
-}
-
-function safeSnapshot(value: any) {
-  try {
-    return JSON.stringify(value);
-  } catch {
-    return String(value);
-  }
-}
-
-export function getWatcherSnapshotKey<T extends Record<string, any>>(targetName: string, idx: number, spec: DependencySpec<T>, formData: T) {
-  const depValues = spec.deps.map((dep) => (formData as any)?.[dep]);
-  return `${targetName}::${idx}::${safeSnapshot(depValues)}`;
 }

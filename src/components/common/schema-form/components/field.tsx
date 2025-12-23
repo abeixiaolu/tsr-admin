@@ -2,11 +2,15 @@ import { Form } from 'antd';
 import { omit } from 'lodash-es';
 import type React from 'react';
 import type { ComponentType } from 'react';
-import type { FieldConfig } from '../types';
+import { useMemo } from 'react';
+import type { DependencySpec, FieldConfig } from '../types';
+import { mergeFieldConfig } from '../utils/dependency-helpers';
 import { widgets } from '../widgets';
+import RecursiveWatcher from './recursive-watcher';
 
 interface FieldProps {
   config: FieldConfig;
+  watchedValues?: Record<string, any>;
 }
 
 function getOmitConfig(config: FieldConfig) {
@@ -18,78 +22,75 @@ function isCustomWidget(type: unknown): type is ComponentType<any> {
 }
 
 function getDependencyNames(config: FieldConfig): string[] {
-  const deps = (config as any).dependencies;
-  if (!Array.isArray(deps)) return [];
-  return deps.flatMap((d: any) => (Array.isArray(d?.deps) ? d.deps : []));
+  const specs = (config as any).dependencies as DependencySpec<any>[] | undefined;
+  if (!specs || !Array.isArray(specs)) return [];
+
+  const allDeps = new Set<string>();
+  specs.forEach((spec) => {
+    if (Array.isArray(spec.deps)) {
+      spec.deps.forEach((d) => {
+        allDeps.add(d);
+      });
+    } else {
+      allDeps.add(spec.deps);
+    }
+  });
+  return Array.from(allDeps);
 }
 
-export const Field: React.FC<FieldProps> = ({ config }) => {
-  if (!config) return null;
+export const FieldInner: React.FC<FieldProps> = ({ config: initialConfig, watchedValues }) => {
+  const form = Form.useFormInstance();
+  const depNames = useMemo(() => getDependencyNames(initialConfig), [initialConfig]);
+  const mergedConfig = useMemo(() => {
+    if (!depNames.length) return initialConfig;
+    const specs = initialConfig.dependencies;
 
-  if (config.type === 'title') {
+    let currentConfig = { ...initialConfig };
+    if (specs) {
+      specs.forEach((spec) => {
+        if (spec.effect) {
+          const patch = spec.effect(watchedValues, { form });
+          if (patch) {
+            currentConfig = mergeFieldConfig(currentConfig, patch);
+          }
+        }
+      });
+    }
+    return currentConfig;
+  }, [initialConfig, depNames, watchedValues, form]);
+
+  if (!mergedConfig) return null;
+
+  if (mergedConfig.type === 'title') {
     return (
-      <Form.Item {...getOmitConfig(config)} noStyle>
-        {config.label}
+      <Form.Item {...getOmitConfig(mergedConfig)} noStyle>
+        {mergedConfig.label}
       </Form.Item>
     );
   }
 
-  const Widget = isCustomWidget(config.type) ? config.type : widgets[config.type];
+  const Widget = isCustomWidget(mergedConfig.type) ? mergedConfig.type : widgets[mergedConfig.type];
   if (!Widget) {
-    console.warn(`Widget type "${config.type}" not found.`);
+    console.warn(`Widget type "${mergedConfig.type}" not found.`);
     return null;
   }
 
   const renderField = () => (
-    <Form.Item {...getOmitConfig(config)}>
-      <Widget {...config.props} />
+    <Form.Item {...getOmitConfig(mergedConfig)}>
+      <Widget {...mergedConfig.props} />
     </Form.Item>
   );
-
-  if (config.hide) {
-    const dependencies = getDependencyNames(config);
-    const shouldUpdate = (prev: Record<string, any>, curr: Record<string, any>) => {
-      if (dependencies.length) return dependencies.some((dep) => prev?.[dep] !== curr?.[dep]);
-
-      let isHiddenPrev = false;
-      let isHiddenCurr = false;
-
-      if (typeof config.hide === 'function') {
-        isHiddenPrev = config.hide({ formData: prev });
-        isHiddenCurr = config.hide({ formData: curr });
-      } else if (typeof config.hide === 'object') {
-        isHiddenPrev = config.hide.expression({ formData: prev });
-        isHiddenCurr = config.hide.expression({ formData: curr });
-      }
-
-      return isHiddenPrev !== isHiddenCurr;
-    };
-
-    return (
-      <Form.Item noStyle shouldUpdate={shouldUpdate}>
-        {({ getFieldsValue, setFieldValue }) => {
-          const formData = getFieldsValue();
-          let isHidden = false;
-          let clearValueOnHide = true;
-
-          if (typeof config.hide === 'function') {
-            isHidden = config.hide({ formData });
-          } else if (typeof config.hide === 'object') {
-            isHidden = config.hide.expression({ formData });
-            clearValueOnHide = config.hide.clearValueOnHide ?? true;
-          }
-
-          if (isHidden && clearValueOnHide) {
-            const currentValue = getFieldsValue([config.name])[config.name];
-            if (currentValue !== undefined) {
-              setFieldValue(config.name, undefined);
-            }
-          }
-          return isHidden ? null : renderField();
-        }}
-      </Form.Item>
-    );
-  }
-
+  if (mergedConfig.hide) return null;
   return renderField();
 };
+
+export function Field({ config }: FieldProps) {
+  const form = Form.useFormInstance();
+  const depNames = getDependencyNames(config);
+  if (!depNames.length) return <FieldInner config={config} />;
+  return (
+    <RecursiveWatcher names={depNames} form={form} values={{}}>
+      {(values) => <FieldInner config={config} watchedValues={values} />}
+    </RecursiveWatcher>
+  );
+}
