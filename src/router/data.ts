@@ -26,32 +26,6 @@ export const routeData: RouteInfoItem[] = [
       },
     ],
   },
-  {
-    key: '/about',
-    label: 'menu.about',
-    icon: ExampleIcon,
-  },
-  {
-    key: 'random-1',
-    label: 'menu.payIn&PayOut',
-    icon: ExampleIcon,
-    itemType: 'menu',
-    children: [
-      {
-        key: 'random-2',
-        label: 'menu.payIn&PayOut',
-        icon: ExampleIcon,
-        itemType: 'menu',
-        children: [
-          {
-            key: '/settings',
-            label: 'menu.settings',
-            icon: ExampleIcon,
-          },
-        ],
-      },
-    ],
-  },
 ];
 
 export const flattenRouteData = flatRouteData(routeData);
