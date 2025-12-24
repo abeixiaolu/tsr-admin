@@ -13,6 +13,11 @@ export const routeData: RouteInfoItem[] = [
     label: 'menu.demo',
     icon: ExampleIcon,
   },
+  {
+    key: '/biz-demo',
+    label: 'menu.biz-demo',
+    icon: ExampleIcon,
+  },
 ];
 
 export const flattenRouteData = flatRouteData(routeData);

@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as DashboardRouteRouteImport } from './routes/_dashboard/route'
 import { Route as DashboardIndexRouteImport } from './routes/_dashboard/index'
 import { Route as DashboardDemoRouteImport } from './routes/_dashboard/demo'
+import { Route as DashboardBizDemoRouteImport } from './routes/_dashboard/biz-demo'
 import { Route as authSignInRouteImport } from './routes/(auth)/sign-in'
 
 const DashboardRouteRoute = DashboardRouteRouteImport.update({
@@ -28,6 +29,11 @@ const DashboardDemoRoute = DashboardDemoRouteImport.update({
   path: '/demo',
   getParentRoute: () => DashboardRouteRoute,
 } as any)
+const DashboardBizDemoRoute = DashboardBizDemoRouteImport.update({
+  id: '/biz-demo',
+  path: '/biz-demo',
+  getParentRoute: () => DashboardRouteRoute,
+} as any)
 const authSignInRoute = authSignInRouteImport.update({
   id: '/(auth)/sign-in',
   path: '/sign-in',
@@ -36,11 +42,13 @@ const authSignInRoute = authSignInRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/sign-in': typeof authSignInRoute
+  '/biz-demo': typeof DashboardBizDemoRoute
   '/demo': typeof DashboardDemoRoute
   '/': typeof DashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/sign-in': typeof authSignInRoute
+  '/biz-demo': typeof DashboardBizDemoRoute
   '/demo': typeof DashboardDemoRoute
   '/': typeof DashboardIndexRoute
 }
@@ -48,18 +56,20 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_dashboard': typeof DashboardRouteRouteWithChildren
   '/(auth)/sign-in': typeof authSignInRoute
+  '/_dashboard/biz-demo': typeof DashboardBizDemoRoute
   '/_dashboard/demo': typeof DashboardDemoRoute
   '/_dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/sign-in' | '/demo' | '/'
+  fullPaths: '/sign-in' | '/biz-demo' | '/demo' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/sign-in' | '/demo' | '/'
+  to: '/sign-in' | '/biz-demo' | '/demo' | '/'
   id:
     | '__root__'
     | '/_dashboard'
     | '/(auth)/sign-in'
+    | '/_dashboard/biz-demo'
     | '/_dashboard/demo'
     | '/_dashboard/'
   fileRoutesById: FileRoutesById
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardDemoRouteImport
       parentRoute: typeof DashboardRouteRoute
     }
+    '/_dashboard/biz-demo': {
+      id: '/_dashboard/biz-demo'
+      path: '/biz-demo'
+      fullPath: '/biz-demo'
+      preLoaderRoute: typeof DashboardBizDemoRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
     '/(auth)/sign-in': {
       id: '/(auth)/sign-in'
       path: '/sign-in'
@@ -103,11 +120,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface DashboardRouteRouteChildren {
+  DashboardBizDemoRoute: typeof DashboardBizDemoRoute
   DashboardDemoRoute: typeof DashboardDemoRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
 }
 
 const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
+  DashboardBizDemoRoute: DashboardBizDemoRoute,
   DashboardDemoRoute: DashboardDemoRoute,
   DashboardIndexRoute: DashboardIndexRoute,
 }

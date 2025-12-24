@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { OTP_BIZ_TYPE_ENUM } from '@/apis/enum';
 import EmailVerification from '@/components/biz/email-verification';
 
-export default function HomePage() {
+export default function EmailVerificationDemo() {
   const [openEmailVerification, setOpenEmailVerification] = useState(false);
   return (
     <div>

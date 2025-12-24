@@ -15,6 +15,7 @@ function createRequestInstance(baseURL = getEnv().VITE_APP_API_URL) {
 
   http.interceptors.request.use((config) => {
     const token = useAuthStore.getState().token;
+    console.log('token', token);
     const lang = useSettingStore.getState().settings.lang;
     if (token) {
       config.headers['fx-token'] = token;
@@ -25,7 +26,7 @@ function createRequestInstance(baseURL = getEnv().VITE_APP_API_URL) {
 
   http.interceptors.response.use(
     (response) => {
-      const { respCode, respMsg } = response.data;
+      const { respCode, respMsg, data } = response.data;
       if (AUTH_ERROR_CODES.includes(respCode)) {
         useAuthStore.getState().clearAuth();
         return Promise.reject(new Error(respMsg || 'Unauthorized'));
@@ -34,7 +35,7 @@ function createRequestInstance(baseURL = getEnv().VITE_APP_API_URL) {
         message().error(respMsg || 'System Error');
         return Promise.reject(new Error(respMsg || 'Business Error'));
       }
-      return response.data;
+      return data;
     },
     (error: AxiosError) => {
       message().error(error.message);
@@ -54,11 +55,14 @@ function createRequestInstance(baseURL = getEnv().VITE_APP_API_URL) {
   /**
    * 定义一个 POST 请求
    * @param url 接口地址
+   * Compatible with TanStack Query's mutationFn: (variables: TVariables) => Promise<TData>
    */
   function definePost<Res, Body = unknown>(url: string, defineConfig?: AxiosRequestConfig) {
-    return (data?: Body, config?: AxiosRequestConfig) => {
+    function postFn(data?: Body): Promise<Res>;
+    function postFn(data?: Body, config?: AxiosRequestConfig): Promise<Res> {
       return http.post<any, Res>(url, data, { ...defineConfig, ...config });
-    };
+    }
+    return postFn;
   }
 
   return { defineGet, definePost };

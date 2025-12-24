@@ -1,4 +1,4 @@
-import { useRequest } from 'ahooks';
+import { useMutation } from '@tanstack/react-query';
 import type { ModalProps } from 'antd';
 import { Form, Input, Modal } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
@@ -39,8 +39,8 @@ export default function EmailVerification({ onSuccess, bizType = OTP_BIZ_TYPE_EN
   const [countdown, setCountdown] = useState(() => getRemainingCountdown(countdownStorageKey));
   const [form] = Form.useForm<{ otp: string }>();
   const params = useMemo(() => ({ bizType }), [bizType]);
-  const { runAsync: sendOtpWithUser, loading } = useRequest(COMMON_API.sendOtpWithUser, {
-    manual: true,
+  const { mutateAsync: sendOtpWithUser, isPending: loading } = useMutation({
+    mutationFn: COMMON_API.sendOtpWithUser,
     onSuccess: () => {
       message().success(t('biz.emailVerification.otpSent'));
       if (typeof window !== 'undefined') storage.setItem(countdownStorageKey, `${Date.now()}`);

@@ -6,12 +6,12 @@ import SuccessIcon from '@/icons/internal/success.svg?react';
 import { cn } from '@/utils';
 import Icon from '../common/icon';
 
-export interface SuccessModalProps extends ModalProps {
+export interface ResultModalProps extends ModalProps {
   onOk: () => void;
   isSuccess?: boolean;
   reason?: string;
 }
-export default function SuccessModal(props: SuccessModalProps) {
+export default function ResultModal(props: ResultModalProps) {
   const { t } = useTranslation();
   const { onOk, isSuccess = true, reason } = props;
   const icon = isSuccess ? SuccessIcon : ErrorIcon;
