@@ -1,5 +1,6 @@
 import axios, { type AxiosError, type AxiosRequestConfig } from 'axios';
 import { useAuthStore } from '@/stores/auth';
+import { useSettingStore } from '@/stores/settings';
 import getEnv from './get-env';
 import { message } from './toast';
 
@@ -14,8 +15,10 @@ function createRequestInstance(baseURL = getEnv().VITE_APP_API_URL) {
 
   http.interceptors.request.use((config) => {
     const token = useAuthStore.getState().token;
+    const lang = useSettingStore.getState().settings.lang;
     if (token) {
       config.headers['fx-token'] = token;
+      config.headers.lang = lang;
     }
     return config;
   });
