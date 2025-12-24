@@ -12,6 +12,26 @@
       "hint3": "最多上传 {{maxCount}} 个文件"
     }
   },
+  "biz": {
+    "emailVerification": {
+      "title": "邮箱验证",
+      "description": "请提供发送到此邮箱地址的验证码",
+      "otpLabel": "邮箱验证码",
+      "otpPlaceholder": "请输入",
+      "otpExpiresIn": "验证码将在",
+      "seconds": " 秒后过期",
+      "otpInvalid": "请输入6位验证码",
+      "refreshOtp": "刷新验证码",
+      "otpSent": "验证已成功发送"
+    },
+    "successModal": {
+      "title": "提交结果提示",
+      "successTitle": "提交成功",
+      "description": "交易请求已提交，请等待审核结果",
+      "failureTitle": "提交失败",
+      "failureDescription": "原因：{{reason}}"
+    }
+  },
   "global": {
     "404": "您访问的页面不存在",
     "500": "出现错误了，请联系管理员",

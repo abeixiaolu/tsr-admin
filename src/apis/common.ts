@@ -1,4 +1,6 @@
 import { definePost } from '@/utils/request';
+import type { CommonResData } from './apis';
+import type { AccessTermEnum, OtpBizTypeEnum } from './enum';
 
 export const COMMON_API = {
   /** 获取oss上传签名 */
@@ -9,6 +11,7 @@ export const COMMON_API = {
   extractId: definePost<any, any>('/ocr/extractId'),
   /** 获取文件url */
   getFileUrl: definePost<string, { taskId: number }>('/resource/task/fileUrl'),
+  sendOtpWithUser: definePost<CommonResData, SendOtpWithUserPayload>('/fx/otp/sendWithUser'),
 };
 
 interface UploadSignaturePayload {
@@ -21,7 +24,7 @@ export interface GetOssFilePayload {
   /** 资源ID eg:1255046484550774785 */
   resourceId: string;
   /** 访问资源的终端类型 */
-  accessTerm: AccessTerm;
+  accessTerm: AccessTermEnum;
   /** oss媒体资源处理字符串（视频截图、图片处理） */
   processString?: string;
 }
@@ -35,9 +38,6 @@ export interface GetOssFileResponse {
   resourceName: string;
 }
 
-/** 访问资源的终端类型 */
-export const ACCESS_TERM_ENUM = {
-  FRONTEND: 1,
-  BACKEND: 2,
-} as const;
-export type AccessTerm = (typeof ACCESS_TERM_ENUM)[keyof typeof ACCESS_TERM_ENUM];
+export interface SendOtpWithUserPayload {
+  bizType: OtpBizTypeEnum;
+}

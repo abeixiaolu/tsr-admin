@@ -1,0 +1,24 @@
+/** 验证码业务类型 */
+export const OTP_BIZ_TYPE_ENUM = {
+  REGISTER: 1001,
+  LOGIN: 1002,
+  CHANGE_PASSWORD: 1003,
+  PALM_PAY_REGISTER: 1008,
+  PALM_PAY_BIND: 1009,
+  PALM_PAY_UPDATE_EMAIL: 1010,
+  SET_PAYMENT_PIN: 5000,
+  USE_PAYMENT_PIN: 5001,
+  FORGET_PAYMENT_PIN: 5002,
+  UPDATE_PAYMENT_EMAIL: 5004,
+  FORGET_PAYMENT_EMAIL: 5005,
+  USD_OPEN_ACCOUNT: 5009,
+  RISK_OTP: 1011,
+} as const;
+export type OtpBizTypeEnum = (typeof OTP_BIZ_TYPE_ENUM)[keyof typeof OTP_BIZ_TYPE_ENUM];
+
+/** 访问资源的终端类型 */
+export const ACCESS_TERM_ENUM = {
+  FRONTEND: 1,
+  BACKEND: 2,
+} as const;
+export type AccessTermEnum = (typeof ACCESS_TERM_ENUM)[keyof typeof ACCESS_TERM_ENUM];

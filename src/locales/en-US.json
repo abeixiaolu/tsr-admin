@@ -12,6 +12,26 @@
       "hint3": "Maximum {{maxCount}} files"
     }
   },
+  "biz": {
+    "emailVerification": {
+      "title": "Email Verification",
+      "description": "Please provide the OTP sent to this email address",
+      "otpLabel": "Email OTP",
+      "otpPlaceholder": "Please enter",
+      "otpExpiresIn": "OTP expires in",
+      "seconds": "S",
+      "otpInvalid": "Please enter the 6-digit verification code",
+      "refreshOtp": "Resend OTP",
+      "otpSent": "Verification sent successfully"
+    },
+    "successModal": {
+      "title": "Submit Result Prompt",
+      "successTitle": "Submitted Successfully",
+      "description": "The transaction request has been submitted. Please wait for the review results",
+      "failureTitle": "Submission Failed",
+      "failureDescription": "Reason: {{reason}}"
+    }
+  },
   "global": {
     "404": "The page you are looking for does not exist.",
     "500": "An error occurred, please contact the administrator.",
